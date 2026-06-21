@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Screen, LevelProgress, GameResult, MascotVariant, Profile, AgeGroup } from '../types';
 import { LEVELS } from '../data/levels';
-import { BADGES } from '../data/badges';
 
 function todayStr(): string {
   return new Date().toISOString().slice(0, 10);
@@ -72,10 +71,7 @@ export const useGameStore = create<GameStore>()(
 
       getTotalStars: () => Object.values(get().getProgress()).reduce((sum, p) => sum + p.stars, 0),
 
-      isLevelUnlocked: (levelId) => {
-        if (levelId === 1) return true;
-        return get().getProgress()[levelId - 1]?.played ?? false;
-      },
+      isLevelUnlocked: (_levelId) => true,
 
       createProfile: (name, mascotVariant, ageGroup) => {
         const id = (crypto.randomUUID?.() ?? String(Date.now()));
