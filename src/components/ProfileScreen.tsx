@@ -24,12 +24,17 @@ function CreateProfileModal({ onClose }: { onClose: () => void }) {
   const { createProfile } = useGameStore();
   const [step, setStep] = useState<'name' | 'mascot'>('name');
   const [name, setName] = useState('');
-  const [ageGroup, setAgeGroup] = useState<AgeGroup>('young');
+  const [age, setAge] = useState('');
   const [mascot, setMascot] = useState<MascotVariant>('orange');
 
-  function handleAgeGroupSelect(group: AgeGroup) {
-    setAgeGroup(group);
-    setMascot(group === 'young' ? 'orange' : 'robot');
+  const ageNum = parseInt(age, 10);
+  const ageValid = !isNaN(ageNum) && ageNum >= 4 && ageNum <= 18;
+  const ageGroup: AgeGroup = ageNum >= 10 ? 'older' : 'young';
+
+  function handleNext() {
+    if (!name.trim() || !ageValid) return;
+    setMascot(ageGroup === 'older' ? 'robot' : 'orange');
+    setStep('mascot');
   }
 
   function handleCreate() {
@@ -73,15 +78,16 @@ function CreateProfileModal({ onClose }: { onClose: () => void }) {
                 Wie gaat er typen?
               </p>
 
+              {/* Name input */}
               <input
                 type="text"
                 value={name}
                 onChange={e => setName(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && name.trim() && setStep('mascot')}
+                onKeyDown={e => e.key === 'Enter' && name.trim() && document.getElementById('age-input')?.focus()}
                 placeholder="Jouw naam..."
                 maxLength={20}
                 autoFocus
-                className="w-full px-4 py-3 rounded-2xl text-lg font-black outline-none mb-5"
+                className="w-full px-4 py-3 rounded-2xl text-lg font-black outline-none mb-4"
                 style={{
                   background: 'rgba(255,255,255,0.06)',
                   border: '1px solid rgba(255,255,255,0.1)',
@@ -90,35 +96,67 @@ function CreateProfileModal({ onClose }: { onClose: () => void }) {
                 }}
               />
 
-              <p className="text-xs font-semibold mb-3 text-center uppercase tracking-widest" style={{ color: 'rgba(100,116,139,0.8)', letterSpacing: '0.2em' }}>
+              {/* Age input */}
+              <p className="text-xs font-semibold mb-2 uppercase tracking-widest" style={{ color: 'rgba(100,116,139,0.8)' }}>
                 Hoe oud ben je?
               </p>
-              <div className="grid grid-cols-2 gap-3 mb-5">
-                {([
-                  { group: 'young' as AgeGroup, emoji: '🐱', label: 'Jonger dan 10', sub: 'speelse interface' },
-                  { group: 'older' as AgeGroup, emoji: '🤖', label: '10 jaar of ouder', sub: 'gamer interface' },
-                ] as const).map(({ group, emoji, label, sub }) => (
-                  <motion.button
-                    key={group}
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    onClick={() => handleAgeGroupSelect(group)}
-                    className="flex flex-col items-center py-4 px-3 rounded-2xl cursor-pointer border-none outline-none transition-all"
+              <div className="relative mb-2">
+                <input
+                  id="age-input"
+                  type="number"
+                  min={4} max={18}
+                  value={age}
+                  onChange={e => setAge(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleNext()}
+                  placeholder="bijv. 8"
+                  className="w-full px-4 py-3 rounded-2xl text-lg font-black outline-none"
+                  style={{
+                    background: 'rgba(255,255,255,0.06)',
+                    border: `1px solid ${ageValid ? 'rgba(129,140,248,0.5)' : 'rgba(255,255,255,0.1)'}`,
+                    color: 'rgba(255,255,255,0.9)',
+                    caretColor: '#818CF8',
+                  }}
+                />
+              </div>
+
+              {/* Live feedback */}
+              <AnimatePresence mode="wait">
+                {ageValid && (
+                  <motion.div
+                    key={ageGroup}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl mb-4"
                     style={{
-                      background: ageGroup === group
-                        ? 'rgba(129,140,248,0.15)'
-                        : 'rgba(255,255,255,0.04)',
-                      border: ageGroup === group
-                        ? '1px solid rgba(129,140,248,0.5)'
-                        : '1px solid rgba(255,255,255,0.07)',
+                      background: isOlder ? 'rgba(56,189,248,0.1)' : 'rgba(167,139,250,0.1)',
+                      border: isOlder ? '1px solid rgba(56,189,248,0.3)' : '1px solid rgba(167,139,250,0.3)',
                     }}
                   >
-                    <span className="text-3xl mb-1">{emoji}</span>
-                    <span className="text-sm font-black" style={{ color: 'rgba(255,255,255,0.85)' }}>{label}</span>
-                    <span className="text-xs mt-0.5" style={{ color: 'rgba(100,116,139,0.8)' }}>{sub}</span>
-                  </motion.button>
-                ))}
-              </div>
+                    <span className="text-xl">{isOlder ? '🤖' : '🐱'}</span>
+                    <div>
+                      <p className="text-xs font-black" style={{ color: isOlder ? '#38BDF8' : '#A78BFA' }}>
+                        {isOlder ? 'Gamer interface' : 'Speelse interface'}
+                      </p>
+                      <p className="text-xs" style={{ color: 'rgba(100,116,139,0.8)' }}>
+                        {isOlder ? 'Voor 10 jaar en ouder' : 'Voor jonger dan 10 jaar'}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+                {!ageValid && age !== '' && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="text-xs mb-4 text-center"
+                    style={{ color: 'rgba(248,113,113,0.8)' }}
+                  >
+                    Vul een leeftijd in tussen 4 en 18
+                  </motion.p>
+                )}
+                {!ageValid && age === '' && <div key="empty" className="mb-4" />}
+              </AnimatePresence>
 
               <div className="flex gap-3">
                 <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} onClick={onClose}
@@ -127,11 +165,11 @@ function CreateProfileModal({ onClose }: { onClose: () => void }) {
                   Annuleren
                 </motion.button>
                 <motion.button
-                  whileHover={{ scale: name.trim() ? 1.03 : 1 }}
-                  whileTap={{ scale: name.trim() ? 0.97 : 1 }}
-                  onClick={() => name.trim() && setStep('mascot')}
+                  whileHover={{ scale: name.trim() && ageValid ? 1.03 : 1 }}
+                  whileTap={{ scale: name.trim() && ageValid ? 0.97 : 1 }}
+                  onClick={handleNext}
                   className="flex-[2] py-3 rounded-2xl text-base font-black text-white cursor-pointer border-none shadow-lg"
-                  style={{ background: name.trim() ? 'linear-gradient(135deg, #818CF8, #38BDF8)' : 'rgba(255,255,255,0.1)' }}
+                  style={{ background: name.trim() && ageValid ? 'linear-gradient(135deg, #818CF8, #38BDF8)' : 'rgba(255,255,255,0.1)' }}
                 >
                   Volgende →
                 </motion.button>
