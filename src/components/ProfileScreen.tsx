@@ -299,7 +299,7 @@ export default function ProfileScreen() {
         >
           {/* Home row keys */}
           <div className="flex gap-2">
-            {['A','S','D','F','G','H','J','K','L'].map((k, i) => (
+            {['Q','S','D','F','G','H','J','K','L','M'].map((k, i) => (
               <motion.div
                 key={k}
                 initial={{ opacity: 0, y: 10 }}

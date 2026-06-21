@@ -1,23 +1,33 @@
 import { motion } from 'framer-motion';
 
+// Belgian AZERTY finger color map
 const FINGER_COLORS: Record<string, string> = {
-  q: '#FCA5A5', a: '#FCA5A5', z: '#FCA5A5',
-  w: '#93C5FD', s: '#93C5FD', x: '#93C5FD',
-  e: '#86EFAC', d: '#86EFAC', c: '#86EFAC',
-  r: '#FDE047', f: '#FDE047', v: '#FDE047',
-  t: '#FDE047', g: '#FDE047', b: '#FDE047',
-  y: '#FDE047', h: '#FDE047', n: '#FDE047',
-  u: '#FDE047', j: '#FDE047', m: '#FDE047',
-  i: '#86EFAC', k: '#86EFAC', ',': '#86EFAC',
-  o: '#93C5FD', l: '#93C5FD', '.': '#93C5FD',
-  p: '#FCA5A5', ';': '#FCA5A5', '/': '#FCA5A5',
+  // Left pinky
+  q: '#FCA5A5', a: '#FCA5A5', w: '#FCA5A5',
+  // Left ring
+  s: '#93C5FD', z: '#93C5FD', x: '#93C5FD',
+  // Left middle
+  d: '#86EFAC', e: '#86EFAC', c: '#86EFAC',
+  // Left index (f+g columns)
+  f: '#FDE047', r: '#FDE047', v: '#FDE047',
+  g: '#FDE047', t: '#FDE047', b: '#FDE047',
+  // Right index (h+j columns)
+  h: '#FDE047', u: '#FDE047', n: '#FDE047',
+  j: '#FDE047', y: '#FDE047', ',': '#FDE047',
+  // Right middle
+  k: '#86EFAC', i: '#86EFAC', ';': '#86EFAC',
+  // Right ring
+  l: '#93C5FD', o: '#93C5FD', '.': '#93C5FD',
+  // Right pinky
+  m: '#FCA5A5', p: '#FCA5A5',
   ' ': '#C4B5FD',
 };
 
+// Belgian AZERTY layout
 const ROWS = [
-  ['q','w','e','r','t','y','u','i','o','p'],
-  ['a','s','d','f','g','h','j','k','l',';'],
-  ['z','x','c','v','b','n','m',',','.'],
+  ['a','z','e','r','t','y','u','i','o','p'],
+  ['q','s','d','f','g','h','j','k','l','m'],
+  ['w','x','c','v','b','n',',',';','.'],
 ];
 
 interface KeyboardVisualProps {
