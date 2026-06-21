@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Mascot from './Mascot';
 import MascotPicker from './MascotPicker';
+import HandGuide from './HandGuide';
 import { useGameStore } from '../store/gameStore';
 import { useTheme } from '../context/ThemeContext';
 import { LEVELS } from '../data/levels';
@@ -26,6 +27,7 @@ export default function HomeScreen() {
   } = useGameStore();
   const theme = useTheme();
   const [showPicker, setShowPicker] = useState(false);
+  const [showHandGuide, setShowHandGuide] = useState(false);
 
   const progress = getProgress();
   const mascotVariant = getMascotVariant();
@@ -37,9 +39,6 @@ export default function HomeScreen() {
   const levelsPlayed = Object.values(progress).filter(p => p.played).length;
   const maxStars = LEVELS.length * 3;
   const mascotName = ALL_MASCOT_VARIANTS[mascotVariant]?.name ?? '';
-
-  const textColor = theme.isDark ? 'rgba(255,255,255,0.9)' : undefined;
-  const subtleColor = theme.isDark ? 'rgba(255,255,255,0.45)' : undefined;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8" style={{ background: theme.bgMain }}>
@@ -183,6 +182,23 @@ export default function HomeScreen() {
         </motion.button>
       )}
 
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.97 }}
+        onClick={() => setShowHandGuide(true)}
+        className="mt-3 px-8 py-3 rounded-2xl text-base font-bold cursor-pointer border-none"
+        style={{
+          color: theme.isDark ? '#94A3B8' : '#7C3AED',
+          background: theme.isDark ? 'rgba(255,255,255,0.04)' : 'rgba(124,58,237,0.06)',
+          border: theme.isDark ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(124,58,237,0.15)',
+        }}
+      >
+        ⌨️ Hoe zit ik goed?
+      </motion.button>
+
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -195,6 +211,10 @@ export default function HomeScreen() {
 
       <AnimatePresence>
         {showPicker && <MascotPicker onClose={() => setShowPicker(false)} />}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showHandGuide && <HandGuide onClose={() => setShowHandGuide(false)} />}
       </AnimatePresence>
     </div>
   );
