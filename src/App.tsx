@@ -9,6 +9,7 @@ import LevelMap from './components/LevelMap';
 import TypingGame from './components/TypingGame';
 import ResultScreen from './components/ResultScreen';
 import StatsScreen from './components/StatsScreen';
+import PracticeScreen from './components/PracticeScreen';
 
 const pageVariants = {
   initial: { opacity: 0, y: 16 },
@@ -41,6 +42,7 @@ export default function App() {
           {effectiveScreen === 'game'     && <TypingGame />}
           {effectiveScreen === 'result'   && <ResultScreen />}
           {effectiveScreen === 'stats'    && <StatsScreen />}
+          {effectiveScreen === 'practice' && <PracticeScreen />}
         </motion.div>
       </AnimatePresence>
 

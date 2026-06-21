@@ -1,4 +1,4 @@
-export type Screen = 'profiles' | 'home' | 'levelmap' | 'game' | 'result' | 'stats';
+export type Screen = 'profiles' | 'home' | 'levelmap' | 'game' | 'result' | 'stats' | 'practice';
 
 export interface Profile {
   id: string;

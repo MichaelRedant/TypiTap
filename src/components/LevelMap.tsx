@@ -23,14 +23,24 @@ export default function LevelMap() {
             ← Terug
           </button>
           <h1 className="text-2xl font-black flex-1 text-center" style={{ color: theme.textTitle }}>Kies een Level</h1>
-          <button
-            onClick={() => goTo('stats')}
-            className="font-bold text-sm cursor-pointer bg-transparent border-none"
-            style={{ color: theme.accentColor }}
-            title="Badges bekijken"
-          >
-            🏅 {totalStars}/{maxStars}⭐
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => goTo('practice' as never)}
+              className="font-bold text-sm cursor-pointer bg-transparent border-none"
+              style={{ color: theme.accentColor }}
+              title="Vrij oefenen"
+            >
+              🎯
+            </button>
+            <button
+              onClick={() => goTo('stats')}
+              className="font-bold text-sm cursor-pointer bg-transparent border-none"
+              style={{ color: theme.accentColor }}
+              title="Badges bekijken"
+            >
+              🏅 {totalStars}/{maxStars}⭐
+            </button>
+          </div>
         </div>
       </div>
 

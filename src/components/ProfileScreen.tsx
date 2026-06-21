@@ -28,7 +28,7 @@ function CreateProfileModal({ onClose }: { onClose: () => void }) {
   const [mascot, setMascot] = useState<MascotVariant>('orange');
 
   const ageNum = parseInt(age, 10);
-  const ageValid = !isNaN(ageNum) && ageNum >= 4 && ageNum <= 18;
+  const ageValid = !isNaN(ageNum) && ageNum >= 1;
   const ageGroup: AgeGroup = ageNum >= 10 ? 'older' : 'young';
 
   function handleNext() {
@@ -152,7 +152,7 @@ function CreateProfileModal({ onClose }: { onClose: () => void }) {
                     className="text-xs mb-4 text-center"
                     style={{ color: 'rgba(248,113,113,0.8)' }}
                   >
-                    Vul een leeftijd in tussen 4 en 18
+                    Vul een geldige leeftijd in
                   </motion.p>
                 )}
                 {!ageValid && age === '' && <div key="empty" className="mb-4" />}

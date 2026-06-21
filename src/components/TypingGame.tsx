@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTypingGame } from '../hooks/useTypingGame';
 import { useGameStore } from '../store/gameStore';
@@ -126,6 +126,17 @@ export default function TypingGame() {
   const [introComplete, setIntroComplete] = useState(false);
   const keyboardHints = getKeyboardHints();
 
+  // Shuffle exercise pool and pick max 12 — different each visit
+  const shuffledLevel = useMemo(() => {
+    if (!level) return level;
+    const pool = [...level.exercises];
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return { ...level, exercises: pool.slice(0, Math.min(12, pool.length)) };
+  }, [rawLevel]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const onComplete = useCallback((accuracy: number, stars: number, timeSeconds: number, wpm: number) => {
     if (!rawLevel) return;
     saveResult({ levelId: rawLevel.id, accuracy, stars, timeSeconds, wpm });
@@ -135,16 +146,16 @@ export default function TypingGame() {
     displayChars, exerciseIdx, totalExercises, accuracy, wpm,
     wrongFlash, isComplete, mascotMood, currentKey, timeSeconds,
     progressPercent, isPaused, togglePause,
-  } = useTypingGame(level!, onComplete, introComplete);
+  } = useTypingGame(shuffledLevel!, onComplete, introComplete);
 
   useEffect(() => { if (!rawLevel) goTo('levelmap'); }, [rawLevel, goTo]);
-  if (!level) return null;
+  if (!level || !shuffledLevel) return null;
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: theme.bgMain }}>
 
       <AnimatePresence>
-        {!introComplete && <LevelIntro level={level} onDone={() => setIntroComplete(true)} />}
+        {!introComplete && <LevelIntro level={shuffledLevel} onDone={() => setIntroComplete(true)} />}
       </AnimatePresence>
 
       <AnimatePresence>
