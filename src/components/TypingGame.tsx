@@ -7,6 +7,7 @@ import { LEVELS } from '../data/levels';
 import type { Level } from '../types';
 import Mascot from './Mascot';
 import KeyboardVisual from './KeyboardVisual';
+import FingerHint from './FingerHint';
 
 function LevelIntro({ level, onDone }: { level: Level; onDone: () => void }) {
   useEffect(() => {
@@ -237,6 +238,12 @@ export default function TypingGame() {
             </motion.div>
           </AnimatePresence>
         </div>
+
+        {introComplete && !isComplete && currentKey && (
+          <div className="my-1">
+            <FingerHint currentKey={currentKey} isDark={theme.isDark} />
+          </div>
+        )}
 
         <div className="flex gap-3 my-3">
           {[
