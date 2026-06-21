@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #F5F3FF;
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .key-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 2.6rem;
+    font-weight: 800;
+    min-width: 2.2ch;
+    padding: 0.08em 0.12em;
+    border-bottom: 4px solid rgba(0,0,0,0.15);
+    transition: all 0.1s;
+  }
+
+  .key-box.upcoming {
+    color: #9CA3AF;
+    background: #F3F4F6;
+    border-color: #D1D5DB;
+  }
+
+  .key-box.current {
+    color: #1E293B;
+    background: #FEF3C7;
+    border-color: #F59E0B;
+    box-shadow: 0 0 0 3px #FDE68A;
+  }
+
+  .key-box.correct {
+    color: #065F46;
+    background: #D1FAE5;
+    border-color: #6EE7B7;
+  }
+
+  .key-box.corrected {
+    color: #92400E;
+    background: #FEF3C7;
+    border-color: #FCD34D;
+  }
+
+  .key-box.error-flash {
+    color: #7F1D1D;
+    background: #FEE2E2;
+    border-color: #FCA5A5;
+  }
+}
