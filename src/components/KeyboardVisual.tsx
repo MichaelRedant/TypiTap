@@ -21,10 +21,14 @@ const FINGER_COLORS: Record<string, string> = {
   // Right pinky
   m: '#FCA5A5', p: '#FCA5A5',
   ' ': '#C4B5FD',
+  // Number row
+  '1': '#FCA5A5', '2': '#93C5FD', '3': '#86EFAC', '4': '#FDE047', '5': '#FDE047',
+  '6': '#FDE047', '7': '#FDE047', '8': '#86EFAC', '9': '#93C5FD', '0': '#FCA5A5',
 };
 
 // Belgian AZERTY layout
 const ROWS = [
+  ['1','2','3','4','5','6','7','8','9','0'],
   ['a','z','e','r','t','y','u','i','o','p'],
   ['q','s','d','f','g','h','j','k','l','m'],
   ['w','x','c','v','b','n',',',';','.'],
@@ -61,7 +65,7 @@ function Key({ char, isCurrent, isAvailable }: { char: string; isCurrent: boolea
 }
 
 export default function KeyboardVisual({ currentKey, availableKeys }: KeyboardVisualProps) {
-  const offsets = ['pl-0', 'pl-4', 'pl-6'];
+  const offsets = ['pl-0', 'pl-0', 'pl-4', 'pl-6'];
 
   return (
     <div className="flex flex-col items-center gap-1 p-3 bg-white/60 rounded-2xl shadow-inner backdrop-blur-sm">

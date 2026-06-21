@@ -12,9 +12,12 @@ const FINGER_COLORS: Record<string, string> = {
   k: '#86EFAC', i: '#86EFAC', ';': '#86EFAC',
   l: '#93C5FD', o: '#93C5FD', '.': '#93C5FD',
   m: '#FCA5A5', p: '#FCA5A5',
+  '1': '#FCA5A5', '2': '#93C5FD', '3': '#86EFAC', '4': '#FDE047', '5': '#FDE047',
+  '6': '#FDE047', '7': '#FDE047', '8': '#86EFAC', '9': '#93C5FD', '0': '#FCA5A5',
 };
 
 const AZERTY_ROWS = [
+  ['1','2','3','4','5','6','7','8','9','0'],
   ['a','z','e','r','t','y','u','i','o','p'],
   ['q','s','d','f','g','h','j','k','l','m'],
   ['w','x','c','v','b','n',',',';','.'],
@@ -23,14 +26,14 @@ const AZERTY_ROWS = [
 const HOME_ROW = ['q','s','d','f','g','h','j','k','l','m'];
 
 const FINGER_LEGEND = [
-  { label: 'Pink (L)',      color: '#FCA5A5', keys: ['Q','A','W'] },
-  { label: 'Ring (L)',      color: '#93C5FD', keys: ['S','Z','X'] },
-  { label: 'Middel (L)',    color: '#86EFAC', keys: ['D','E','C'] },
-  { label: 'Wijsvinger (L)',color: '#FDE047', keys: ['F','R','V','G','T','B'] },
-  { label: 'Wijsvinger (R)',color: '#FDE047', keys: ['H','J','U','Y','N',','] },
-  { label: 'Middel (R)',    color: '#86EFAC', keys: ['K','I',';'] },
-  { label: 'Ring (R)',      color: '#93C5FD', keys: ['L','O','.'] },
-  { label: 'Pink (R)',      color: '#FCA5A5', keys: ['M','P'] },
+  { label: 'Pink (L)',      color: '#FCA5A5', keys: ['1','Q','A','W'] },
+  { label: 'Ring (L)',      color: '#93C5FD', keys: ['2','S','Z','X'] },
+  { label: 'Middel (L)',    color: '#86EFAC', keys: ['3','D','E','C'] },
+  { label: 'Wijsvinger (L)',color: '#FDE047', keys: ['4','5','F','R','V','G','T','B'] },
+  { label: 'Wijsvinger (R)',color: '#FDE047', keys: ['6','7','H','J','U','Y','N',','] },
+  { label: 'Middel (R)',    color: '#86EFAC', keys: ['8','K','I',';'] },
+  { label: 'Ring (R)',      color: '#93C5FD', keys: ['9','L','O','.'] },
+  { label: 'Pink (R)',      color: '#FCA5A5', keys: ['0','M','P'] },
 ];
 
 const TIPS = [
@@ -176,7 +179,7 @@ export default function HandGuide({ onClose }: HandGuideProps) {
               <p className="text-xs font-bold uppercase tracking-widest mb-3 text-center" style={{ color: textMuted }}>AZERTY — kleur = welke vinger</p>
               <div className="flex flex-col items-center gap-1.5">
                 {AZERTY_ROWS.map((row, ri) => {
-                  const offsets = [0, 14, 22];
+                  const offsets = [0, 4, 14, 22];
                   return (
                     <div key={ri} className="flex gap-1" style={{ marginLeft: offsets[ri] }}>
                       {row.map(k => {

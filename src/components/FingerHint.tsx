@@ -40,6 +40,16 @@ const KEY_FINGER: Record<string, FingerInfo> = {
   m: { finger: 'pink',   hand: 'right', label: 'Rechter pink' },
   p: { finger: 'pink',   hand: 'right', label: 'Rechter pink' },
   ' ': { finger: 'thumb', hand: 'both',  label: 'Duim (spatiebalk)' },
+  '1': { finger: 'pink',   hand: 'left',  label: 'Linker pink' },
+  '2': { finger: 'ring',   hand: 'left',  label: 'Linker ringvinger' },
+  '3': { finger: 'middle', hand: 'left',  label: 'Linker middelvinger' },
+  '4': { finger: 'index',  hand: 'left',  label: 'Linker wijsvinger' },
+  '5': { finger: 'index',  hand: 'left',  label: 'Linker wijsvinger' },
+  '6': { finger: 'index',  hand: 'right', label: 'Rechter wijsvinger' },
+  '7': { finger: 'index',  hand: 'right', label: 'Rechter wijsvinger' },
+  '8': { finger: 'middle', hand: 'right', label: 'Rechter middelvinger' },
+  '9': { finger: 'ring',   hand: 'right', label: 'Rechter ringvinger' },
+  '0': { finger: 'pink',   hand: 'right', label: 'Rechter pink' },
 };
 
 const FINGER_COLORS: Record<FingerName, string> = {

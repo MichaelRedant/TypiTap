@@ -14,6 +14,16 @@ const KEY_FINGER: Record<string, { finger: FingerName; hand: 'left' | 'right' | 
   l: { finger: 'ring',   hand: 'right' }, o: { finger: 'ring',   hand: 'right' }, '.': { finger: 'ring',  hand: 'right' },
   m: { finger: 'pink',   hand: 'right' }, p: { finger: 'pink',   hand: 'right' },
   ' ': { finger: 'thumb', hand: 'both' },
+  '1': { finger: 'pink',   hand: 'left'  },
+  '2': { finger: 'ring',   hand: 'left'  },
+  '3': { finger: 'middle', hand: 'left'  },
+  '4': { finger: 'index',  hand: 'left'  },
+  '5': { finger: 'index',  hand: 'left'  },
+  '6': { finger: 'index',  hand: 'right' },
+  '7': { finger: 'index',  hand: 'right' },
+  '8': { finger: 'middle', hand: 'right' },
+  '9': { finger: 'ring',   hand: 'right' },
+  '0': { finger: 'pink',   hand: 'right' },
 };
 
 const COLORS: Record<FingerName, string> = {
