@@ -8,10 +8,11 @@ import type { Level } from '../types';
 import Mascot from './Mascot';
 import KeyboardVisual from './KeyboardVisual';
 import FingerHint from './FingerHint';
+import LevelHandsIntro from './LevelHandsIntro';
 
 function LevelIntro({ level, onDone }: { level: Level; onDone: () => void }) {
   useEffect(() => {
-    const t = setTimeout(onDone, 3000);
+    const t = setTimeout(onDone, 4500);
     const onKey = (e: KeyboardEvent) => { if (e.key !== 'Escape') onDone(); };
     window.addEventListener('keydown', onKey);
     return () => { clearTimeout(t); window.removeEventListener('keydown', onKey); };
@@ -22,38 +23,45 @@ function LevelIntro({ level, onDone }: { level: Level; onDone: () => void }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center px-6"
+      className="fixed inset-0 z-50 flex items-center justify-center px-6 overflow-y-auto"
       style={{ background: 'linear-gradient(135deg, rgba(109,40,217,0.97), rgba(124,58,237,0.97))' }}
       onClick={onDone}
     >
-      <div className="text-center text-white max-w-sm w-full">
-        <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', delay: 0.1 }} className="text-7xl mb-4">
+      <div className="text-center text-white max-w-sm w-full py-8">
+        <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', delay: 0.1 }} className="text-6xl mb-3">
           {level.emoji}
         </motion.div>
-        <motion.h2 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="text-4xl font-black mb-2">
+        <motion.h2 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="text-3xl font-black mb-1">
           {level.title}
         </motion.h2>
-        <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }} className="text-lg text-purple-200 mb-6">
+        <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }} className="text-base text-purple-200 mb-4">
           {level.subtitle}
         </motion.p>
+
         {level.newKeys.length > 0 && (
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }} className="bg-white/15 rounded-2xl px-6 py-4 mb-6">
-            <p className="text-sm font-bold text-purple-200 mb-3">✨ Nieuwe toetsen:</p>
-            <div className="flex gap-3 justify-center flex-wrap">
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }} className="bg-white/15 rounded-2xl px-5 py-3 mb-4">
+            <p className="text-xs font-bold text-purple-200 mb-2">✨ Nieuwe toetsen:</p>
+            <div className="flex gap-2 justify-center flex-wrap">
               {level.newKeys.map(k => (
-                <span key={k} className="bg-white text-purple-700 font-black text-2xl px-5 py-2 rounded-xl shadow-lg">
+                <span key={k} className="bg-white text-purple-700 font-black text-xl px-4 py-1.5 rounded-xl shadow-lg">
                   {k === ',' ? ',' : k === '.' ? '.' : k.toUpperCase()}
                 </span>
               ))}
             </div>
           </motion.div>
         )}
+
+        {/* Animated hand position guide */}
+        <div className="bg-white/10 rounded-2xl px-4 py-3 mb-4" onClick={e => e.stopPropagation()}>
+          <LevelHandsIntro allKeys={level.allKeys} />
+        </div>
+
         {level.targetWpm > 0 && (
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="text-purple-200 text-sm mb-4">
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-purple-200 text-sm mb-3">
             🎯 Doel: {level.targetWpm} woorden/minuut voor 3 sterren
           </motion.p>
         )}
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="text-white/50 text-sm">
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} className="text-white/40 text-sm">
           Druk op een toets of tik om te beginnen…
         </motion.p>
       </div>
